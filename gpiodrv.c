@@ -50,18 +50,10 @@ int gpio_in(int gpio_num) {
 }
 
 int gpio_set(int gpio_num) {
-    gpioalloc(gpio_num);
-    if (!gpio_mem) {
-        gpio_mem = (unsigned *)ioremap(GPIO_BASE, 4096);
-    }
     *(gpio_mem + 7) |= 1 << gpio_num;
     return 0;
 }
 int gpio_clr(int gpio_num) {
-    gpioalloc(gpio_num);
-    if (!gpio_mem) {
-        gpio_mem = (unsigned *)ioremap(GPIO_BASE, 4096);
-    }
     *(gpio_mem + ((gpio_num) / 10)) &= ~(7<<(((gpio_num) % 10)*3));
     *(gpio_mem +((gpio_num)/10)) |=  (1<<(((gpio_num)%10)*3));
     *(gpio_mem + 10) |= 1 << gpio_num;
@@ -69,10 +61,6 @@ int gpio_clr(int gpio_num) {
 }
 
 int gpio_read_data(int gpio_num) {
-    gpioalloc(gpio_num);
-    if (!gpio_mem) {
-        gpio_mem = (unsigned *)ioremap(GPIO_BASE, 4096);
-    }
     *(gpio_mem + ((gpio_num) / 10)) &= ~(7 << (((gpio_num) % 10) * 3));
     printk("13 = %#x", *(gpio_mem + 13));
     return *(gpio_mem + 13) & (1 << gpio_num) ? 1 : 0;
