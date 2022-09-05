@@ -50,13 +50,13 @@ int gpio_in(int gpio_num) {
 }
 
 int gpio_set(int gpio_num) {
-    *(gpio_mem + 7) |= 1 << gpio_num;
+    *(gpio_mem + 7) = 1 << gpio_num;
     return 0;
 }
 int gpio_clr(int gpio_num) {
     *(gpio_mem + ((gpio_num) / 10)) &= ~(7<<(((gpio_num) % 10)*3));
     *(gpio_mem +((gpio_num)/10)) |=  (1<<(((gpio_num)%10)*3));
-    *(gpio_mem + 10) |= 1 << gpio_num;
+    *(gpio_mem + 10) = 1 << gpio_num;
     return 0;
 }
 
